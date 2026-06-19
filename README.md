@@ -79,6 +79,13 @@ For individual developers running Claude Code against Foundry from their own mac
 az login --tenant <foundry-tenant>
 export CLAUDE_CODE_USE_FOUNDRY=1
 export ANTHROPIC_FOUNDRY_RESOURCE=<foundry-account>
+
+# Model deployments are auto-discovered by name inside the resource above.
+# Only set these if your deployment names differ from the defaults:
+# export ANTHROPIC_DEFAULT_SONNET_MODEL=claude-sonnet-4-6
+# export ANTHROPIC_DEFAULT_HAIKU_MODEL=claude-haiku-4-5
+# export ANTHROPIC_DEFAULT_OPUS_MODEL=claude-opus-4-6
+
 claude   # then type /status — expect: "API provider: Microsoft Foundry"
 ```
 
