@@ -24,7 +24,7 @@ Copy/paste these into Claude Code (CLI or VS Code) to validate the setup and sho
 
 ## Coding showcases
 
-> *"Write a PowerShell function that wraps `az role assignment create` and assigns both required Foundry roles in one call."*
+> *"Write a PowerShell function that wraps `az role assignment create` and assigns the `Foundry User` role at the Foundry resource scope."*
 
 > *"Generate a GitHub Actions workflow that runs `verify-setup.sh` on a self-hosted Linux runner and fails the job if any check fails."*
 

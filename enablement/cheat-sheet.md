@@ -37,7 +37,7 @@ claude   # then: /status
 # Am I on the right tenant?
 az account show
 
-# Do I have BOTH required roles?
+# Do I have the Foundry User role?
 az role assignment list --assignee <user-id> --scope <foundry-resource-id> -o table
 ```
 
@@ -49,7 +49,7 @@ az role assignment list --assignee <user-id> --scope <foundry-resource-id> -o ta
 |---|---|---|
 | 1 | `baseURL and resource are mutually exclusive` | Unset `ANTHROPIC_BASE_URL` |
 | 2 | `Unable to get authority for /<guid>` | `az login --tenant <foundry-tenant>` |
-| 3 | 401 / 403 | Assign **both** required roles at resource scope |
+| 3 | 401 / 403 | Assign **`Foundry User`** at resource scope |
 | 4 | Prompts for Anthropic login | Env var not inherited — re-set and relaunch from SAME shell |
 | 5 | `Unknown Configuration Setting` | `claudeCode.environmentVariables` must be ARRAY form |
 

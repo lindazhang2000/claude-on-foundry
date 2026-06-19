@@ -54,7 +54,7 @@ flowchart LR
 2. Claude Code reads `CLAUDE_CODE_USE_FOUNDRY` → decides to route to Foundry
 3. Claude Code reads `ANTHROPIC_FOUNDRY_RESOURCE` → builds the endpoint URL
 4. Claude Code attaches the Entra ID bearer token from the current `az login` session
-5. Foundry validates RBAC (both roles required)
+5. Foundry validates RBAC (`Foundry User` at resource scope)
 6. Foundry routes the request to the deployment whose role matches (primary / fast / extended thinking)
 7. Response streams back through the same path
 

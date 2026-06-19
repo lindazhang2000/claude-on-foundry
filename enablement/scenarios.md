@@ -47,12 +47,12 @@ Anonymized customer scenarios you can use as live discussion in workshops. Read 
 **Diagnostic walk:**
 
 1. How does the runner authenticate? (OIDC federation? Service principal secret? Managed identity?)
-2. Does the runner's identity have **both** roles on the Foundry resource at **resource** scope?
+2. Does the runner's identity have the **`Foundry User`** role on the Foundry resource at **resource** scope?
 3. Is the runner inside a VNet with private endpoints? If yes, is the Foundry endpoint reachable?
 4. Are env vars actually set in the workflow step? (`env:` block, not just `with:`)
 5. Does the workflow run `az login` with the correct `tenant-id`?
 
-**Root cause 50% of the time:** the runner's identity is missing one of the two roles, OR the runner is in a private network and Foundry's public endpoint is blocked.
+**Root cause 50% of the time:** the runner's identity is missing the `Foundry User` role, OR the runner is in a private network and Foundry's public endpoint is blocked.
 
 ---
 

@@ -72,7 +72,7 @@ Claude should assume:
 
 > "Diagnose why Claude Code is prompting for Anthropic login even after setting Foundry environment variables."
 
-> "Write a one-liner to verify both required RBAC roles are assigned on a Foundry resource."
+> "Write a one-liner to verify the `Foundry User` role is assigned on a Foundry resource."
 
 > "My VS Code Claude Code panel still shows Anthropic as the provider but the CLI shows Foundry. Why?"
 
