@@ -69,6 +69,7 @@ Run these in a **bash/zsh** terminal — on macOS/Linux that's any terminal; on 
 
 ```bash
 az login --tenant <foundry-tenant>
+az account set --subscription <foundry-subscription>
 
 export CLAUDE_CODE_USE_FOUNDRY=1
 export ANTHROPIC_FOUNDRY_RESOURCE=<foundry-resource>
@@ -84,6 +85,7 @@ PowerShell equivalent (Windows). Use this to `az login` and set the env vars, th
 
 ```powershell
 az login --tenant <foundry-tenant>
+az account set --subscription <foundry-subscription>
 $env:CLAUDE_CODE_USE_FOUNDRY    = "1"
 $env:ANTHROPIC_FOUNDRY_RESOURCE = "<foundry-resource>"
 
