@@ -2,6 +2,10 @@
 
 The mental model. Every failure maps to one arrow on this diagram.
 
+![Claude Code routing to Microsoft Foundry — developer machine, Foundry resource (Azure), and Claude model deployments](../../images/claude-code/architecture.svg)
+
+## Text-based (Mermaid) version
+
 ```mermaid
 flowchart LR
     subgraph DEV["Developer machine"]
