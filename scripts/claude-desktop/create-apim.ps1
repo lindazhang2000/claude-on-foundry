@@ -13,7 +13,7 @@
   - Idempotent: re-running it just verifies state and prints the gateway URL.
 
   After this script finishes, follow the rest of the README:
-    1. (Optional) Run scripts/register-claude-entra-app.ps1.
+    1. (Optional) Run scripts/claude-desktop/register-claude-entra-app.ps1.
     2. Add the Anthropic API + foundry-key Named value in the portal
        (Steps 2-4 of the blog), or wire them up via your own automation.
 
@@ -29,7 +29,7 @@
 
 [CmdletBinding()]
 param(
-  [string] $EnvFile        = (Join-Path $PSScriptRoot '..\.env'),
+  [string] $EnvFile        = (Join-Path $PSScriptRoot '..\..\.env'),
   [string] $SubscriptionId,
   [string] $ResourceGroup,
   [string] $Location,
@@ -145,7 +145,7 @@ Write-Host "APIM SKU       : $ApimSku"
 Write-Host "Gateway URL    : $gatewayUrl"
 Write-Host ""
 Write-Host "Next steps:" -ForegroundColor Yellow
-Write-Host "  1. (Optional) Run scripts/register-claude-entra-app.ps1 to register"
+Write-Host "  1. (Optional) Run scripts/claude-desktop/register-claude-entra-app.ps1 to register"
 Write-Host "     the Entra app and seed entra-tenant-id / entra-client-id Named values."
 Write-Host "  2. In the portal, add the Anthropic API + operations (blog Step 2),"
 Write-Host "     add the foundry-key Named value (blog Step 3), and paste the"

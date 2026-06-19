@@ -7,7 +7,7 @@ One page. Print it. Pin it to your monitor.
 ## Setup (5 steps)
 
 1. Deploy `claude-sonnet-4-6` in Foundry (East US 2 or Sweden Central).
-2. Assign **BOTH** roles at resource scope: `Cognitive Services User` + `Foundry User`.
+2. Assign **`Foundry User`** at the Foundry **resource** scope (role ID `53ca6127-db72-4b80-b1b0-d745d6d5456d`, formerly *Azure AI User*). Don't add `Cognitive Services *` roles — they don't apply to Foundry.
 3. `az login --tenant <foundry-tenant>`
 4. `setx CLAUDE_CODE_USE_FOUNDRY 1` and `setx ANTHROPIC_FOUNDRY_RESOURCE <resource>`
 5. From the SAME shell: `code .` (or run `claude`)

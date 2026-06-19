@@ -9,7 +9,7 @@ End-to-end walkthrough for getting Claude Code (CLI + VS Code extension) talking
 | Item | Why |
 |---|---|
 | Foundry resource in a supported region (East US 2, Sweden Central) | Claude models are region-gated |
-| **Both** RBAC roles on the Foundry resource: `Cognitive Services User` AND `Foundry User` | Single biggest cause of 401/403 |
+| `Foundry User` role on the Foundry resource (role ID `53ca6127-db72-4b80-b1b0-d745d6d5456d`, formerly *Azure AI User*) | Single biggest cause of 401/403. Don't add `Cognitive Services *` roles — they don't apply to Foundry. |
 | Azure CLI installed and on PATH | Needed for `az login` and `az account show` |
 | Claude Code CLI installed | `irm https://claude.ai/install.ps1 \| iex` (Windows) / `curl -fsSL https://claude.ai/install.sh \| sh` (macOS/Linux) |
 | Git Bash or WSL2 (Windows only) | Claude Code CLI requires a POSIX shell |
@@ -42,17 +42,18 @@ az cognitiveservices account deployment create \
 
 ## 3. Grant RBAC
 
-Both roles are required. Assign at **resource scope** (not subscription scope, unless the resource lives in the same subscription).
+Assign `Foundry User` at the Foundry **resource scope** (not subscription scope, unless the resource lives in the same subscription).
 
 ```bash
 RES=$(az cognitiveservices account show -g <rg> -n <foundry-resource> --query id -o tsv)
 
+# Foundry User — role ID is rename-proof (works whether the display name in
+# your tenant is "Foundry User" or the legacy "Azure AI User").
 az role assignment create --assignee <user-or-sp-id> \
-  --role "Cognitive Services User" --scope "$RES"
-
-az role assignment create --assignee <user-or-sp-id> \
-  --role "Foundry User" --scope "$RES"
+  --role 53ca6127-db72-4b80-b1b0-d745d6d5456d --scope "$RES"
 ```
+
+> Per the [Foundry RBAC doc](https://learn.microsoft.com/en-us/azure/foundry/concepts/rbac-foundry?tabs=owner), any role starting with `Cognitive Services *` does **not** apply to Foundry. Older field guidance that also assigned `Cognitive Services User` is obsolete — don't carry it forward.
 
 Verify:
 
@@ -90,7 +91,7 @@ claude
 
 ## 5. VS Code setup
 
-Copy [../vscode/settings.sample.json](../vscode/settings.sample.json) into your User or Workspace `settings.json`:
+Copy [../../examples/claude-code/vscode-settings.sample.json](../../examples/claude-code/vscode-settings.sample.json) into your User or Workspace `settings.json`:
 
 ```jsonc
 {
@@ -113,7 +114,7 @@ Then:
 
 ## 6. Validate
 
-Run [../scripts/verify-setup.ps1](../scripts/verify-setup.ps1) or [../scripts/verify-setup.sh](../scripts/verify-setup.sh). It checks:
+Run [../../scripts/claude-code/verify-setup.ps1](../../scripts/claude-code/verify-setup.ps1) or [../../scripts/claude-code/verify-setup.sh](../../scripts/claude-code/verify-setup.sh). It checks:
 
 - `az account show` succeeds and tenant matches
 - `CLAUDE_CODE_USE_FOUNDRY=1` is set

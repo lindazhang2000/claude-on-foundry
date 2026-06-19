@@ -43,7 +43,7 @@ Claude should assume:
 ### Troubleshoot setup
 
 - If `/status` shows **"Anthropic"** → env vars are not set in the process that launched Claude Code. Re-set them and relaunch from the same shell.
-- If **401 / 403** → RBAC issue. Verify **both** roles are assigned: `Cognitive Services User` AND `Foundry User`.
+- If **401 / 403** → RBAC issue. Verify `Foundry User` is assigned at the Foundry **resource** scope.
 - If **"baseURL and resource are mutually exclusive"** → unset `ANTHROPIC_BASE_URL`, keep `ANTHROPIC_FOUNDRY_RESOURCE`.
 - If **"Unable to get authority for /<guid>"** → wrong tenant. Re-run `az login --tenant <foundry-tenant>`.
 
@@ -83,4 +83,4 @@ Claude should assume:
 - Do **not** suggest API-key-based auth — this repo is Entra ID only.
 - Do **not** suggest setting `ANTHROPIC_BASE_URL` — Foundry routing is via `ANTHROPIC_FOUNDRY_RESOURCE`.
 - Do **not** suggest "Reload Window" as a fix for env-var changes — it does not re-read parent process env.
-- Do **not** invent role names — the only two required are `Cognitive Services User` and `Foundry User`.
+- Do **not** invent role names — the only role required is `Foundry User` (role ID `53ca6127-db72-4b80-b1b0-d745d6d5456d`, formerly *Azure AI User*). Per the Foundry RBAC doc, `Cognitive Services *` roles don't apply to Foundry.

@@ -22,7 +22,7 @@
 
 [CmdletBinding()]
 param(
-  [string] $EnvFile        = (Join-Path $PSScriptRoot '..\.env'),
+  [string] $EnvFile        = (Join-Path $PSScriptRoot '..\..\.env'),
   [string] $TenantId,
   [string] $SubscriptionId,
   [string] $ResourceGroup,

@@ -12,7 +12,7 @@ flowchart LR
     end
 
     subgraph FOUNDRY["Microsoft Foundry resource"]
-        RBAC["RBAC<br/>Cognitive Services User<br/>+ Foundry User"]:::gotcha
+        RBAC["RBAC<br/>Foundry User<br/>(at resource scope)"]:::gotcha
         ENDPOINT["Custom subdomain endpoint<br/>(region matters)"]:::foundry
     end
 
@@ -44,7 +44,7 @@ flowchart LR
 
 - **Env vars**: not inherited by the launching process (the #1 silent failure)
 - **az login session**: wrong tenant, or token expired
-- **RBAC**: only one of the two required roles assigned
+- **RBAC**: `Foundry User` not assigned at resource scope (or assigned at the wrong scope)
 
 ---
 

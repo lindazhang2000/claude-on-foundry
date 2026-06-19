@@ -12,7 +12,7 @@ This guide walks the full path end-to-end, with the exact JSON that validates, w
 
 **Setup**
 - Deploy `claude-sonnet-4-6` (optionally Haiku + Opus) in a supported region
-- Grant `Cognitive Services User` + `Foundry User`
+- Grant `Foundry User` at the Foundry resource scope
 - `az login --tenant <tenant>`, then launch VS Code via `code .`
 
 **Config**
@@ -49,7 +49,7 @@ Same model, same CLI, enterprise-grade plumbing underneath.
 | Azure subscription with pay-as-you-go billing | `az account show` |
 | Foundry resource in supported regions | Check your region's model availability in Foundry portal |
 | Contributor/Owner on the resource group (for deployments) | Azure Portal → IAM |
-| **Cognitive Services User** + **Foundry User** on the resource (for invoking) | Azure Portal → IAM |
+| **Foundry User** on the resource (for invoking) | Azure Portal → IAM |
 | Azure CLI installed and logged in | `az --version`, `az login` |
 | Claude Code CLI installed | `claude --version` |
 | VS Code (current) with the Anthropic Claude Code extension | Help → About |
@@ -97,29 +97,29 @@ az cognitiveservices account deployment create `
 
 ✍️ *Figure 1: Foundry portal “Models + endpoints” showing the three Claude deployments.*
 
-![Three Claude model deployments in the Foundry portal](../images/Three%20Claude%20deployments.png)
+![Three Claude model deployments in the Foundry portal](../../images/claude-code/three-claude-deployments.png)
 
 ---
 
-## Step 2 — Grant yourself the right roles
+## Step 2 — Grant yourself the right role
 
-This is the #1 source of silent failures. You need **both**:
+This is the #1 source of silent failures. Assign **one** role at the **Foundry resource scope**:
 
 | Role | Role ID | Purpose |
 |---|---|---|
-| **Cognitive Services User** | `a97b65f3-24c7-4388-baec-2e87135dc908` | data-plane invocation |
-| **Foundry User** *(formerly Azure AI User)* | `53ca6127-db72-4b80-b1b0-d745d6d5456d` | Foundry-native permissions |
+| **Foundry User** *(formerly Azure AI User)* | `53ca6127-db72-4b80-b1b0-d745d6d5456d` | Foundry data-plane permissions |
 
 ```powershell
 $me = az ad signed-in-user show --query id -o tsv
 $scope = az cognitiveservices account show -n <foundry-resource> -g <rg> --query id -o tsv
 
-# Use role IDs — rename-proof (works whether the display name is "Azure AI User" or "Foundry User")
-az role assignment create --assignee $me --role a97b65f3-24c7-4388-baec-2e87135dc908 --scope $scope  # Cognitive Services User
-az role assignment create --assignee $me --role 53ca6127-db72-4b80-b1b0-d745d6d5456d --scope $scope  # Foundry User (formerly Azure AI User)
+# Use the role ID — rename-proof (works whether the display name is "Azure AI User" or "Foundry User")
+az role assignment create --assignee $me --role 53ca6127-db72-4b80-b1b0-d745d6d5456d --scope $scope  # Foundry User
 ```
 
-> The Foundry RBAC rename (Azure AI User → Foundry User) is rolling out; both role names map to the same role definition (same role ID), depending on tenant rollout state. Use whichever role name your tenant exposes — or use the role IDs above to avoid ambiguity.
+> The Foundry RBAC rename (Azure AI User → Foundry User) is rolling out; both display names map to the same role definition (same role ID), depending on tenant rollout state. Use whichever role name your tenant exposes — or use the role ID above to avoid ambiguity.
+>
+> **Heads-up if you're following older guides:** earlier field write-ups (including a previous version of this post) recommended *also* assigning `Cognitive Services User`. Per the current [Foundry RBAC doc](https://learn.microsoft.com/en-us/azure/foundry/concepts/rbac-foundry?tabs=owner), any role starting with `Cognitive Services *` does **not** apply to Foundry. `Foundry User` alone is enough.
 
 ---
 
@@ -206,7 +206,7 @@ Model:                        Default (claude-sonnet-4-6)
 
 ✍️ *Figure 2: `/status` output confirming `API provider: Microsoft Foundry`.*
 
-![Claude CLI /status panel showing Microsoft Foundry as the API provider](../images/CLI%20Status.png)
+![Claude CLI /status panel showing Microsoft Foundry as the API provider](../../images/claude-code/cli-status.png)
 
 If you instead see "Anthropic" or it prompts for an Anthropic login, `CLAUDE_CODE_USE_FOUNDRY` isn't being inherited — see troubleshooting below.
 
@@ -240,7 +240,7 @@ If VS Code was already running, **fully quit it** (not just close the window) an
 
 ✍️ *Figure 3: `settings.json` with the `claudeCode.environmentVariables` array form.*
 
-![VS Code settings.json with claudeCode.environmentVariables](../images/settings.png)
+![VS Code settings.json with claudeCode.environmentVariables](../../images/claude-code/settings.png)
 
 ---
 
@@ -256,7 +256,7 @@ You should get a response within a few seconds, and the panel should indicate it
 
 ✍️ *Figure 4: Claude Code panel in VS Code responding through Microsoft Foundry.*
 
-![Claude Code VS Code panel responding with Microsoft Foundry routing](../images/Claude%20Code%20VS%20Code%20panel.png)
+![Claude Code VS Code panel responding with Microsoft Foundry routing](../../images/claude-code/claude-code-vs-code-panel.png)
 
 ---
 
@@ -269,7 +269,7 @@ You should get a response within a few seconds, and the panel should indicate it
 | `Failed to get token from azureADTokenProvider: ChainedTokenCredential authentication failed` | VS Code Claude Code panel | Extension didn't inherit `az login` session | Quit VS Code entirely; relaunch with `code .` from the authed shell |
 | `Token tenant does not match resource tenant` | `claude` CLI or VS Code panel | CLI logged into a different tenant than the Foundry resource | `az login --tenant <foundry-tenant>` |
 | `The model <name> is not available on your foundry deployment` | `claude` CLI first use or VS Code model selector | Deployment name mismatch | Either rename the Foundry deployment, or set `ANTHROPIC_DEFAULT_*_MODEL` to the actual name |
-| `401 / 403` on first request | `claude` CLI or VS Code panel | Missing RBAC on the resource | Assign **Cognitive Services User** *and* **Foundry User** on the resource scope |
+| `401 / 403` on first request | `claude` CLI or VS Code panel | Missing RBAC on the resource | Assign **Foundry User** at the **resource** scope. Don't add `Cognitive Services *` roles — they don't apply to Foundry. |
 | Claude Code prompts for Anthropic login | VS Code Claude Code panel | `CLAUDE_CODE_USE_FOUNDRY` not set in the process | Set the env var **before** launching `claude` / `code .` |
 | VS Code shows "Unknown Configuration Setting" for `claudeCode.environmentVariables` | VS Code Settings tab | Wrong JSON shape | Use the **array of `{name,value}` objects** form |
 | `429 Too Many Requests` | `claude` CLI or VS Code panel | TPM/RPM exhausted | Foundry portal → **Operate → Quotas**; request increase or reduce parallelism |

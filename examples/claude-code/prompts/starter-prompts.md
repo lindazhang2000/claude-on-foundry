@@ -28,7 +28,7 @@ Copy/paste these into Claude Code (CLI or VS Code) to validate the setup and sho
 
 > *"Generate a GitHub Actions workflow that runs `verify-setup.sh` on a self-hosted Linux runner and fails the job if any check fails."*
 
-> *"Refactor `scripts/setup-foundry.sh` to be safe when sourced (don't `exit` on errors)."*
+> *"Refactor `scripts/claude-code/setup-foundry.sh` to be safe when sourced (don't `exit` on errors)."*
 
 ---
 

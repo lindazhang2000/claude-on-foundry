@@ -9,7 +9,7 @@
 - Developers enabling Claude Desktop in regulated environments
 - Platform teams standardizing identity and governance for LLM access
 
-![Claude Desktop chatting against the enterprise gateway, with the model picker showing the Foundry deployment](images/desktop%20chat.png)
+![Claude Desktop chatting against the enterprise gateway, with the model picker showing the Foundry deployment](../../images/claude-desktop/desktop-chat.png)
 
 > **Why this post exists:** Microsoft Learn's [Configure Claude Desktop with Foundry Models](https://learn.microsoft.com/en-us/azure/foundry/foundry-models/how-to/configure-claude-desktop) only shows the **API-key** path — a shared key pasted into every user's Claude Desktop config. That's fine for a quick demo, but it's a non-starter for most enterprises (no per-user identity, no MFA / Conditional Access, hard to revoke, hard to audit). This post fills that gap: same Foundry backend, but with **Microsoft Entra ID SSO** in front via Azure API Management, so each user signs in with their corporate identity and zero secrets land on the laptop.
 
@@ -97,7 +97,7 @@ This is the OIDC client Claude Desktop signs users into. Claude Desktop requires
 I scripted it so the setup is one command and idempotent:
 
 ```powershell
-# scripts/register-claude-entra-app.ps1
+# scripts/claude-desktop/register-claude-entra-app.ps1
 [CmdletBinding()]
 param(
   [string] $TenantId       = '<your-tenant-id>',
@@ -144,7 +144,7 @@ az apim nv create -g $ResourceGroup --service-name $ApimName `
 
 Run it once. The output prints the **client ID** you'll need in Claude Desktop later, and it leaves two **Named values** in APIM (`entra-tenant-id`, `entra-client-id`) that the gateway policy will reference.
 
-![Entra ID app registration with the Mobile and desktop applications platform configured and the http://127.0.0.1/callback redirect URI](images/01-entra-app-registration.png)
+![Entra ID app registration with the Mobile and desktop applications platform configured and the http://127.0.0.1/callback redirect URI](../../images/claude-desktop/01-entra-app-registration.png)
 
 > ⚠️ Common pitfall: if the redirect URI ends up under the **Web** platform instead of **Mobile and desktop applications**, Entra will demand a client secret on token exchange — Claude won't send one and you'll get `Token exchange failed (HTTP 401)`. The app type can't be changed after creation, so create a new app if that happens.
 
@@ -171,7 +171,7 @@ Add two operations under it:
 
 The `/v1/models` operation isn't strictly needed (Foundry's Anthropic surface doesn't implement it), but having it registered means you can decide later whether to stub it out or proxy it.
 
-![APIM API with POST /v1/messages and GET /v1/models operations](images/02-apim-add-api.png)
+![APIM API with POST /v1/messages and GET /v1/models operations](../../images/claude-desktop/02-apim-add-api.png)
 
 ---
 
@@ -243,7 +243,7 @@ Two things to notice:
 
 **APIM becomes the security boundary** — user identity is validated at the edge, and downstream services never see or rely on user tokens.
 
-![APIM inbound policy editor showing the validate-jwt block followed by set-backend-service and x-api-key injection](images/04-policy-editor.png)
+![APIM inbound policy editor showing the validate-jwt block followed by set-backend-service and x-api-key injection](../../images/claude-desktop/04-policy-editor.png)
 
 ---
 
@@ -303,7 +303,7 @@ Open Claude Desktop → **Configure third-party inference** and fill it in like 
 >
 > Add one entry per deployment you want to expose. The benefit of stubbing rather than turning discovery off is that adding new models becomes a policy edit — no need to re-export and redeploy Claude Desktop config to every user.
 
-![Claude Desktop Configure third-party inference panel with Gateway, Interactive sign-in, gateway base URL, client ID and issuer URL filled in](images/05-claude-desktop-config.png)
+![Claude Desktop Configure third-party inference panel with Gateway, Interactive sign-in, gateway base URL, client ID and issuer URL filled in](../../images/claude-desktop/05-claude-desktop-config.png)
 
 Click **Apply Changes** then **Sign in to your organization**. Your browser opens to the normal Entra sign-in page; once approved you're returned to the app, and a quick connection test runs.
 
@@ -311,7 +311,7 @@ The success indicator is a small green banner:
 
 > ✅ Inference — 1-token completion in 1449 ms · **via identity provider**
 
-![Green success banner in Claude Desktop reading 'Inference — 1-token completion … via identity provider'](images/07-success-banner.png)
+![Green success banner in Claude Desktop reading 'Inference — 1-token completion … via identity provider'](../../images/claude-desktop/07-success-banner.png)
 
 For broader rollout, hit the **Export** button at the top of the configuration window — it produces a `.mobileconfig` (macOS) or `.reg` (Windows) you can push via Intune / Jamf to every user's machine.
 
@@ -337,7 +337,7 @@ Click **Send → Trace**, and look at two places:
 
 That confirms both halves of the chain.
 
-![APIM Test console showing a 200 response from Foundry with the Claude message JSON body](images/06-apim-test-trac.png)
+![APIM Test console showing a 200 response from Foundry with the Claude message JSON body](../../images/claude-desktop/06-apim-test-trac.png)
 
 ---
 

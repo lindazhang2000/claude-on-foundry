@@ -1,0 +1,38 @@
+# --- Python / venv ---
+.venv/
+__pycache__/
+*.pyc
+
+# --- Environment / secrets ---
+.env
+.env.local
+.env.*.local
+.env.*
+!.env.example
+
+# --- Editor / IDE ---
+.vscode/
+.idea/
+
+# --- OS / Office cruft ---
+~$*
+.DS_Store
+Thumbs.db
+
+# --- Build / log output ---
+*.log
+*.tmp
+
+# --- Decks and binary assets (keep out of Git; share separately) ---
+*.pptx
+*.ppt
+*.key
+
+# --- Local-only working notes (do not publish) ---
+session-enablement-kit.md
+session-prep-*.md
+session-prep-*.html
+
+# --- Generated HTML renders of Markdown sources ---
+docs/**/*.html
+blog/**/*.html
