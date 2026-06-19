@@ -18,5 +18,14 @@
     // claude-sonnet-4-6 / claude-haiku-4-5 / claude-opus-4-6, you can omit these.
     { "name": "ANTHROPIC_MODEL",             "value": "claude-sonnet-4-6" },
     { "name": "ANTHROPIC_SMALL_FAST_MODEL",  "value": "claude-haiku-4-5" }
-  ]
+  ],
+
+  // Suppress the "sign in to Anthropic" prompt on startup. Foundry users
+  // authenticate via `az login`, not anthropic.com — the prompt is irrelevant
+  // and clicking through it can pollute the session with an Anthropic token.
+  "claudeCode.disableLoginPrompt": true,
+
+  // Dock the Claude Code UI in the bottom Panel (wider chat area) instead of
+  // the sidebar. Pure preference — change to "sidebar" or remove to taste.
+  "claudeCode.preferredLocation": "panel"
 }
