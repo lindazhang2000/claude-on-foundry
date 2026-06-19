@@ -65,7 +65,14 @@ az role assignment list --assignee <user-id> --scope "$RES" -o table
 
 ## 4. CLI setup
 
-Run these in a **bash/zsh** terminal — on macOS/Linux that's any terminal; on Windows use **Git Bash** or **WSL2** (the Claude Code CLI itself requires a POSIX shell on Windows).
+**Which shell do I use?**
+
+| Platform | Run `claude` in | Notes |
+| --- | --- | --- |
+| macOS / Linux | Any terminal (bash/zsh) | Run everything in one place. |
+| Windows | **Git Bash** or **WSL2** | The `claude` CLI requires a POSIX shell — it does **not** run in PowerShell. |
+
+On Windows you *can* do the prep (`az login`, env vars) in **PowerShell**, then launch `code .` (VS Code) or type `bash` to drop into Git Bash and run `claude` — the child process inherits the env vars. Not sure which shell you're in? `echo $SHELL` prints a path like `/usr/bin/bash` in a POSIX shell; `$PSVersionTable` prints a version table in PowerShell.
 
 ```bash
 az login --tenant <foundry-tenant>
@@ -73,6 +80,11 @@ az account set --subscription <foundry-subscription>
 
 export CLAUDE_CODE_USE_FOUNDRY=1
 export ANTHROPIC_FOUNDRY_RESOURCE=<foundry-resource>
+
+# Optional: only if your deployment names differ from the model IDs
+# export ANTHROPIC_DEFAULT_SONNET_MODEL=claude-sonnet-4-6
+# export ANTHROPIC_DEFAULT_HAIKU_MODEL=claude-haiku-4-5
+# export ANTHROPIC_DEFAULT_OPUS_MODEL=claude-opus-4-6
 
 claude
 # inside Claude: type /status
@@ -88,6 +100,11 @@ az login --tenant <foundry-tenant>
 az account set --subscription <foundry-subscription>
 $env:CLAUDE_CODE_USE_FOUNDRY    = "1"
 $env:ANTHROPIC_FOUNDRY_RESOURCE = "<foundry-resource>"
+
+# Optional: only if your deployment names differ from the model IDs
+# $env:ANTHROPIC_DEFAULT_SONNET_MODEL = "claude-sonnet-4-6"
+# $env:ANTHROPIC_DEFAULT_HAIKU_MODEL  = "claude-haiku-4-5"
+# $env:ANTHROPIC_DEFAULT_OPUS_MODEL   = "claude-opus-4-6"
 
 code .          # launch VS Code with env vars inherited
 # - or -
