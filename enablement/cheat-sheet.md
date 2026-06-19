@@ -16,7 +16,7 @@ One page. Print it. Pin it to your monitor.
 
 ## Proof point
 
-```
+```text
 claude
 > /status
 
@@ -46,7 +46,7 @@ az role assignment list --assignee <user-id> --scope <foundry-resource-id> -o ta
 ## Top 5 gotchas (memorize)
 
 | # | Symptom | One-line fix |
-|---|---|---|
+| --- | --- | --- |
 | 1 | `baseURL and resource are mutually exclusive` | Unset `ANTHROPIC_BASE_URL` |
 | 2 | `Unable to get authority for /<guid>` | `az login --tenant <foundry-tenant>` |
 | 3 | 401 / 403 | Assign **`Foundry User`** at resource scope |

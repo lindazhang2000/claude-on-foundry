@@ -45,7 +45,7 @@ Claude should assume:
 - If `/status` shows **"Anthropic"** → env vars are not set in the process that launched Claude Code. Re-set them and relaunch from the same shell.
 - If **401 / 403** → RBAC issue. Verify `Foundry User` is assigned at the Foundry **resource** scope.
 - If **"baseURL and resource are mutually exclusive"** → unset `ANTHROPIC_BASE_URL`, keep `ANTHROPIC_FOUNDRY_RESOURCE`.
-- If **"Unable to get authority for /<guid>"** → wrong tenant. Re-run `az login --tenant <foundry-tenant>`.
+- If **"Unable to get authority for `/<guid>`"** → wrong tenant. Re-run `az login --tenant <foundry-tenant>`.
 
 ---
 
@@ -71,9 +71,9 @@ Claude should assume:
 ## Example prompts
 
 > "Diagnose why Claude Code is prompting for Anthropic login even after setting Foundry environment variables."
-
+>
 > "Write a one-liner to verify the `Foundry User` role is assigned on a Foundry resource."
-
+>
 > "My VS Code Claude Code panel still shows Anthropic as the provider but the CLI shows Foundry. Why?"
 
 ---

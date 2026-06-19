@@ -10,12 +10,14 @@ This guide walks the full path end-to-end, with the exact JSON that validates, w
 
 ## TL;DR
 
-**Setup**
+### Setup
+
 - Deploy `claude-sonnet-4-6` (optionally Haiku + Opus) in a supported region
 - Grant `Foundry User` at the Foundry resource scope
 - `az login --tenant <tenant>`, then launch VS Code via `code .`
 
-**Config**
+### Config
+
 - CLI:
   - `CLAUDE_CODE_USE_FOUNDRY=1`
   - `ANTHROPIC_FOUNDRY_RESOURCE=<name>`
@@ -23,7 +25,8 @@ This guide walks the full path end-to-end, with the exact JSON that validates, w
 - VS Code:
   - Use `[{ "name": "...", "value": "..." }]` format
 
-**Validate**
+### Validate
+
 - `claude → /status`
 - Expect: `API provider: Microsoft Foundry`
 
@@ -45,7 +48,7 @@ Same model, same CLI, enterprise-grade plumbing underneath.
 ## Prerequisites checklist
 
 | Requirement | How to verify |
-|---|---|
+| --- | --- |
 | Azure subscription with pay-as-you-go billing | `az account show` |
 | Foundry resource in supported regions | Check your region's model availability in Foundry portal |
 | Contributor/Owner on the resource group (for deployments) | Azure Portal → IAM |
@@ -64,7 +67,7 @@ Same model, same CLI, enterprise-grade plumbing underneath.
 Claude Code uses **three model roles**, and it expects a deployment for each:
 
 | Role | Default deployment name | Used for |
-|---|---|---|
+| --- | --- | --- |
 | Primary | `claude-sonnet-4-6` | general coding (balanced) |
 | Fast | `claude-haiku-4-5` | quick edits, file reads |
 | Extended thinking | `claude-opus-4-6` | complex reasoning |
@@ -83,6 +86,7 @@ az cognitiveservices model list -l eastus2 `
 ```
 
 **Azure CLI:**
+
 ```powershell
 az cognitiveservices account deployment create `
   --name <foundry-resource> `
@@ -106,7 +110,7 @@ az cognitiveservices account deployment create `
 This is the #1 source of silent failures. Assign **one** role at the **Foundry resource scope**:
 
 | Role | Role ID | Purpose |
-|---|---|---|
+| --- | --- | --- |
 | **Foundry User** *(formerly Azure AI User)* | `53ca6127-db72-4b80-b1b0-d745d6d5456d` | Foundry data-plane permissions |
 
 ```powershell
@@ -140,7 +144,7 @@ If `claude` isn't on PATH, restart your shell. The installer drops it under `%US
 
 If your Foundry resource lives in a tenant different from your default, an `az login` to the wrong tenant produces the cryptic error:
 
-```
+```text
 ValueError: Unable to get authority configuration for
 https://login.microsoftonline.com/<bad-guid>.
 Authority would typically be in a format of
@@ -148,6 +152,7 @@ https://login.microsoftonline.com/your_tenant
 ```
 
 Fix:
+
 ```powershell
 az login --tenant <foundry-tenant-guid>
 az account set --subscription <foundry-subscription-guid>
@@ -177,7 +182,7 @@ To make them persistent: `setx CLAUDE_CODE_USE_FOUNDRY 1` (and so on), then **si
 
 ### 🚫 The "mutually exclusive" trap
 
-```
+```text
 API Error: baseURL and resource are mutually exclusive
 ```
 
@@ -197,7 +202,7 @@ claude
 
 Expected output:
 
-```
+```text
 API provider:                 Microsoft Foundry
 Microsoft Foundry base URL:   https://<resource>.services.ai.azure.com/anthropic
 Microsoft Foundry resource:   <resource>
@@ -248,7 +253,7 @@ If VS Code was already running, **fully quit it** (not just close the window) an
 
 In VS Code, click the Claude Code (Spark) icon in the sidebar to open the panel. Type:
 
-```
+```text
 Summarize the structure of this project.
 ```
 
@@ -263,7 +268,7 @@ You should get a response within a few seconds, and the panel should indicate it
 ## Troubleshooting matrix
 
 | Symptom | Where it shows up | Likely cause | Fix |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `API Error: baseURL and resource are mutually exclusive` | `claude` CLI on first request | Both `ANTHROPIC_FOUNDRY_BASE_URL` and `ANTHROPIC_FOUNDRY_RESOURCE` set | Unset one. Prefer `ANTHROPIC_FOUNDRY_RESOURCE`. |
 | `Unable to get authority configuration for https://login.microsoftonline.com/<guid>` | `claude` CLI startup or VS Code panel | Wrong tenant ID in `az login` | `az login --tenant <correct-guid>`; verify with `az account show` |
 | `Failed to get token from azureADTokenProvider: ChainedTokenCredential authentication failed` | VS Code Claude Code panel | Extension didn't inherit `az login` session | Quit VS Code entirely; relaunch with `code .` from the authed shell |
@@ -280,24 +285,29 @@ You should get a response within a few seconds, and the panel should indicate it
 
 ## Best practices
 
-**Auth & secrets**
+### Auth & secrets
+
 - Prefer Entra ID over API keys. If you must use a key for CI, store it as a secret (GitHub Actions secret, Key Vault) — never in `settings.json` (it may sync via Settings Sync).
 - Scope RBAC at the **resource** level, not the subscription, for least privilege.
 
-**Project context**
+### Project context
+
 - Create a `CLAUDE.md` at your repo root with stack, conventions, and entry-point commands. Claude Code reads it automatically and the quality jump is significant.
 - Use `.claude/rules/*.md` for per-area rules (e.g., test conventions, security rules).
 
-**Cost & latency**
+### Cost & latency
+
 - Let Claude Code's auto-routing pick the right role (Sonnet/Haiku/Opus). Don't pin everything to Opus.
 - Cap context with `ANTHROPIC_MAX_TOKENS` if you have a strict budget. *(Note: not honored by every Claude Code version — check [the Claude Code docs](https://docs.anthropic.com/en/docs/claude-code) for your version.)*
 - Watch token spend in **Foundry → Operate → Metrics** weekly.
 
-**Reliability**
+### Reliability
+
 - For team use, deploy all three model roles even if you don't think you need them — silent role-routing failures are confusing.
 - Tag your Foundry resource (`env=dev|prod`, `team=...`) for chargeback.
 
-**Reproducibility**
+### Reproducibility
+
 - Document the exact env vars and `az login --tenant` GUID in your team README.
 - Pin Claude Code CLI version in onboarding docs (`claude --version`) so new joiners hit the same behavior.
 
@@ -328,13 +338,14 @@ Drop a `CLAUDE.md` in your repo and start shipping.
 
 ## When to Use RESOURCE vs BASE_URL
 
-Use RESOURCE (default)
+### Use RESOURCE (default)
+
 - Standard public deployments
 - No custom networking
 
-Use BASE_URL
+### Use BASE_URL
+
 - Private endpoints
 - Custom DNS / VNet routing
 
 Never set both.
-

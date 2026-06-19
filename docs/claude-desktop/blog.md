@@ -5,6 +5,7 @@
 **TL;DR —** In this post, I show how to securely enable Claude Desktop in enterprise environments using Microsoft Entra ID, Azure API Management, and Microsoft Foundry — without deploying a custom backend. This approach removes API keys from endpoints, enforces per-user identity, and aligns fully with Zero Trust principles.
 
 **Who this is for:**
+
 - Enterprise architects evaluating secure AI client patterns
 - Developers enabling Claude Desktop in regulated environments
 - Platform teams standardizing identity and governance for LLM access
@@ -55,7 +56,7 @@ flowchart TB
 
 Or in plain text:
 
-```
+```text
 Claude Desktop
    │  Authorization: Bearer <Entra ID token from the user's browser sign-in>
    ▼
@@ -83,6 +84,7 @@ There are no API keys on user devices. Foundry's key lives only inside APIM. And
 - Azure CLI installed locally.
 
 Throughout this post I'll use placeholders for resource names:
+
 - `<apim-name>` — your API Management service name
 - `<resource-group>` — the resource group that holds it
 - `<foundry-account>` — your Foundry account name
@@ -155,7 +157,7 @@ Run it once. The output prints the **client ID** you'll need in Claude Desktop l
 In the portal under **APIM → APIs → + Add API → HTTP**:
 
 | Field | Value |
-|---|---|
+| --- | --- |
 | Display name | Anthropic API |
 | Name | `anthropicapi` |
 | Web service URL | `https://<foundry-account>.services.ai.azure.com/anthropic` |
@@ -165,9 +167,9 @@ In the portal under **APIM → APIs → + Add API → HTTP**:
 Add two operations under it:
 
 | Method | URL | Display name |
-|---|---|---|
+| --- | --- | --- |
 | POST | `/v1/messages` | Create message |
-| GET  | `/v1/models`   | List models |
+| GET | `/v1/models` | List models |
 
 The `/v1/models` operation isn't strictly needed (Foundry's Anthropic surface doesn't implement it), but having it registered means you can decide later whether to stub it out or proxy it.
 
@@ -252,7 +254,7 @@ Two things to notice:
 Open Claude Desktop → **Configure third-party inference** and fill it in like this:
 
 | Field | Value |
-|---|---|
+| --- | --- |
 | Connection | Gateway |
 | Credential kind | Interactive sign-in |
 | Gateway base URL | `https://<apim-name>.azure-api.net/claude` |
@@ -346,7 +348,7 @@ That confirms both halves of the chain.
 A few common issues encountered during setup — sharing so you can skip them:
 
 | Symptom | Cause | Fix |
-|---|---|---|
+| --- | --- | --- |
 | Claude shows *"Your provider's model list hasn't loaded yet"* and `/v1/models` returns 404 | Foundry's Anthropic surface doesn't implement that endpoint | Turn **Model discovery OFF** in Claude Desktop and add the deployment name manually |
 | Claude shows *"Authentication failed"* even though sign-in worked | The APIM API still had **Subscription required = ON**, blocking the call before `validate-jwt` ran with `401: Access denied due to missing subscription key` | Uncheck **Subscription required** on the API |
 | Portal Test panel shows *"Cannot read properties of undefined (reading 'statusCode')"* | The test console doesn't attach an Entra token, so `validate-jwt` 401s and the panel's JavaScript crashes | Comment out `<validate-jwt>` temporarily for portal testing, or test via `curl` with a real token |

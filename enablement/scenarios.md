@@ -28,10 +28,12 @@ Anonymized customer scenarios you can use as live discussion in workshops. Read 
 
 1. Get the Foundry resource name + resource group from the customer.
 2. Run:
+
    ```bash
    RES=$(az cognitiveservices account show -g <rg> -n <foundry-resource> --query id -o tsv)
    az role assignment list --assignee <dev-id> --scope "$RES" -o table
    ```
+
 3. Confirm `Foundry User` (role ID `53ca6127-db72-4b80-b1b0-d745d6d5456d`, formerly *Azure AI User*) is assigned to the dev at **resource** scope.
 4. Scope trap: admin assigned the role at **subscription** scope but the Foundry resource lives in a different subscription → RBAC inheritance doesn't apply. Re-assign at **resource** scope.
 5. Tenant check: `az account show` → same tenant as the Foundry resource?

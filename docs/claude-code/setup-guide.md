@@ -7,7 +7,7 @@ End-to-end walkthrough for getting Claude Code (CLI + VS Code extension) talking
 ## 1. Prerequisites
 
 | Item | Why |
-|---|---|
+| --- | --- |
 | Foundry resource in a supported region (currently East US 2, Sweden Central — more regions coming; check [Microsoft Learn](https://learn.microsoft.com/azure/ai-foundry/foundry-models/concepts/models#anthropic) to confirm) | Claude models are region-gated |
 | `Foundry User` role on the Foundry resource (role ID `53ca6127-db72-4b80-b1b0-d745d6d5456d`, formerly *Azure AI User*) | You need to add the `Foundry User` role. |
 | Azure CLI installed and on PATH | Needed for `az login` and `az account show` |
@@ -21,7 +21,7 @@ End-to-end walkthrough for getting Claude Code (CLI + VS Code extension) talking
 Deploy at least `claude-sonnet-4-6`. Recommended: deploy all three so Claude Code can route by role.
 
 | Role | Deployment name (default) | Purpose |
-|---|---|---|
+| --- | --- | --- |
 | Primary | `claude-sonnet-4-6` | Balanced coding |
 | Fast | `claude-haiku-4-5` | Quick edits, file reads |
 | Extended thinking | `claude-opus-4-6` | Complex reasoning |
@@ -122,9 +122,9 @@ Copy [../../examples/claude-code/vscode-settings.sample.json](../../examples/cla
 ```
 
 > **Where's the model deployment?** Claude Code discovers deployments **by name** inside the Foundry resource specified by `ANTHROPIC_FOUNDRY_RESOURCE`. If you followed [section 2](#2-deploy-the-models) and used `--deployment-name claude-sonnet-4-6` etc., no override is needed — the client finds them automatically. Set the `ANTHROPIC_DEFAULT_*_MODEL` trio only if you used custom deployment names. Use `/model` inside Claude to switch between discovered deployments.
-
+>
 > **Why `disableLoginPrompt`?** Authentication is handled entirely by `az login` — there is no Anthropic account in this flow. The prompt is misleading and clicking it can pollute the session with a public-Anthropic token, silently bypassing Foundry.
-
+>
 > ⚠️ **Schema trap.** MS Learn shows an object form. The extension only accepts the **array** form shown above.
 
 Then:

@@ -7,7 +7,7 @@ Field-tested matrix. Add a row whenever you hit a new gotcha in a customer call.
 ## Top 12 gotchas
 
 | # | Symptom | Where it shows up | Root cause | Fix |
-|---|---|---|---|---|
+| --- | --- | --- | --- | --- |
 | 1 | `baseURL and resource are mutually exclusive` | CLI startup | Both `ANTHROPIC_BASE_URL` and `ANTHROPIC_FOUNDRY_RESOURCE` set | Unset `ANTHROPIC_BASE_URL`; keep the Foundry one |
 | 2 | `Unable to get authority for /<guid>` | First API call | Logged into the wrong tenant | `az login --tenant <foundry-tenant>` |
 | 3 | 401 / 403 on first request | First API call | `Foundry User` role not assigned (or wrong scope) | Assign **`Foundry User`** at **resource** scope. Don't add `Cognitive Services *` roles — they don't apply to Foundry. |
@@ -26,7 +26,7 @@ Field-tested matrix. Add a row whenever you hit a new gotcha in a customer call.
 ## Common-failure quick table
 
 | Symptom | Root cause |
-|---|---|
+| --- | --- |
 | `API provider: Anthropic` | Env vars not inherited |
 | 401/403 | Missing RBAC |
 | `baseURL and resource are mutually exclusive` | Both vars set |

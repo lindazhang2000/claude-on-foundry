@@ -5,7 +5,7 @@ Run **Anthropic Claude** against models hosted in **Microsoft Foundry**, with En
 This repo combines two field-tested setup patterns:
 
 | Track | Client | Path to Foundry | Auth on the client | Who it's for |
-|---|---|---|---|---|
+| --- | --- | --- | --- | --- |
 | **A. Claude Code** | Claude Code CLI + VS Code extension | **Direct** — client calls Foundry directly | Per-user `az login` (Entra bearer) | Individual developers |
 | **B. Claude Desktop** | Claude Desktop 1.5+ | **Gateway** — client calls APIM → APIM calls Foundry | Entra ID OIDC SSO (no keys on device) | Enterprise / IT rollout |
 
@@ -99,6 +99,7 @@ Or use the bundled scripts:
 > **Windows note:** Claude Code CLI needs a POSIX shell. Set env vars in PowerShell, then launch `claude` from **Git Bash** or **WSL2** — not `cmd.exe` / PowerShell.
 
 **Deep dives:**
+
 - [docs/claude-code/setup-guide.md](docs/claude-code/setup-guide.md) — full walkthrough
 - [docs/claude-code/blog.md](docs/claude-code/blog.md) — narrative blog post
 - [docs/claude-code/architecture.md](docs/claude-code/architecture.md) — request flow
@@ -131,6 +132,7 @@ az login --tenant <your-tenant-id>
 Then follow [docs/claude-desktop/blog.md](docs/claude-desktop/blog.md) from **Step 2** onward to wire up the APIM API, the `validate-jwt` inbound policy, and Claude Desktop's Gateway SSO settings.
 
 **Deep dives:**
+
 - [docs/claude-desktop/blog.md](docs/claude-desktop/blog.md) — full walkthrough with screenshots, policy XML, and Claude Desktop config
 
 ---
@@ -145,7 +147,7 @@ Then follow [docs/claude-desktop/blog.md](docs/claude-desktop/blog.md) from **St
 
 ## Repo layout
 
-```
+```text
 claude-on-foundry/
 ├── docs/
 │   ├── troubleshooting.md          shared, both tracks
@@ -169,7 +171,7 @@ claude-on-foundry/
 ## Common failure modes (both tracks)
 
 | Symptom | Most likely cause |
-|---|---|
+| --- | --- |
 | `API provider: Anthropic` in Claude Code `/status` | Env vars not inherited by the launching process (Track A) |
 | 401 / 403 from Foundry | `Foundry User` not assigned at the **resource** scope, or assigned at subscription scope of a different sub |
 | `baseURL and resource are mutually exclusive` | Both `ANTHROPIC_BASE_URL` and `ANTHROPIC_FOUNDRY_RESOURCE` set (Track A) |

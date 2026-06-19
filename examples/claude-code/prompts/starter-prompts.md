@@ -7,7 +7,7 @@ Copy/paste these into Claude Code (CLI or VS Code) to validate the setup and sho
 ## Smoke tests
 
 > *"Show me the contents of `CLAUDE.md` and summarize the conventions you'll follow in this repo."*
-
+>
 > *"List the env vars Claude Code expects when routing to Microsoft Foundry and explain what each one does."*
 
 ---
@@ -15,9 +15,9 @@ Copy/paste these into Claude Code (CLI or VS Code) to validate the setup and sho
 ## Diagnostic prompts (use these on customer calls)
 
 > *"My `/status` shows `API provider: Anthropic`. Walk me through the diagnostic steps to figure out why."*
-
+>
 > *"I'm getting a 403 from Foundry. Generate the exact `az role assignment list` command I should ask the customer to run, with placeholders."*
-
+>
 > *"Compare the JSON shapes I might use for `claudeCode.environmentVariables` in `settings.json` and tell me which one the extension actually accepts."*
 
 ---
@@ -25,9 +25,9 @@ Copy/paste these into Claude Code (CLI or VS Code) to validate the setup and sho
 ## Coding showcases
 
 > *"Write a PowerShell function that wraps `az role assignment create` and assigns the `Foundry User` role at the Foundry resource scope."*
-
+>
 > *"Generate a GitHub Actions workflow that runs `verify-setup.sh` on a self-hosted Linux runner and fails the job if any check fails."*
-
+>
 > *"Refactor `scripts/claude-code/setup-foundry.sh` to be safe when sourced (don't `exit` on errors)."*
 
 ---
