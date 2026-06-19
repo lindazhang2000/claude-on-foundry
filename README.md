@@ -75,6 +75,8 @@ For individual developers running Claude Code against Foundry from their own mac
 
 **Setup at a glance:**
 
+> **Windows note:** Claude Code CLI needs a POSIX shell. Set env vars in PowerShell, then launch `claude` from **Git Bash** or **WSL2** — not `cmd.exe` / PowerShell.
+
 ```bash
 az login --tenant <foundry-tenant>
 export CLAUDE_CODE_USE_FOUNDRY=1
@@ -102,8 +104,6 @@ Or use the bundled scripts:
 ./scripts/claude-code/setup-foundry.sh <foundry-account> <tenant>
 ./scripts/claude-code/verify-setup.sh
 ```
-
-> **Windows note:** Claude Code CLI needs a POSIX shell. Set env vars in PowerShell, then launch `claude` from **Git Bash** or **WSL2** — not `cmd.exe` / PowerShell.
 
 **Deep dives:**
 
