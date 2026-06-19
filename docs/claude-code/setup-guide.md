@@ -65,6 +65,8 @@ az role assignment list --assignee <user-id> --scope "$RES" -o table
 
 ## 4. CLI setup
 
+Run these in a **bash/zsh** terminal — on macOS/Linux that's any terminal; on Windows use **Git Bash** or **WSL2** (the Claude Code CLI itself requires a POSIX shell on Windows).
+
 ```bash
 az login --tenant <foundry-tenant>
 
@@ -78,14 +80,19 @@ claude
 #   Microsoft Foundry resource:  <foundry-resource>
 ```
 
-PowerShell equivalent:
+PowerShell equivalent (Windows). Use this to `az login` and set the env vars, then launch **VS Code** (`code .`) or a **Git Bash / WSL** shell from the same window — the env vars are inherited by the child process. `claude` itself won't run directly in PowerShell because the CLI requires a POSIX shell on Windows.
 
 ```powershell
 az login --tenant <foundry-tenant>
 $env:CLAUDE_CODE_USE_FOUNDRY    = "1"
 $env:ANTHROPIC_FOUNDRY_RESOURCE = "<foundry-resource>"
-claude
+
+code .          # launch VS Code with env vars inherited
+# - or -
+bash            # drop into Git Bash, then run: claude
 ```
+
+> **The env vars only live in the shell that set them.** Launch `claude` (and `code .` for VS Code) from that same shell so the child process inherits them. To make them stick across new terminals, add the `export` lines to `~/.bashrc` / `~/.zshrc`, or on Windows persist them with `setx` (or use `./scripts/claude-code/setup-foundry.ps1 -Persist`).
 
 ---
 
