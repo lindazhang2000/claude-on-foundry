@@ -1,0 +1,14 @@
+{
+  // Drop these keys into your VS Code User or Workspace settings.json.
+  //
+  // IMPORTANT: claudeCode.environmentVariables MUST be an array of {name,value}
+  // objects. The MS Learn doc shows an object form — the extension does NOT
+  // accept that shape and will silently fall back to Anthropic.
+  //
+  // After editing settings.json, fully QUIT VS Code (not Reload Window) and
+  // relaunch from a shell where you've already run `az login --tenant <foundry-tenant>`.
+  "claudeCode.environmentVariables": [
+    { "name": "CLAUDE_CODE_USE_FOUNDRY",    "value": "1" },
+    { "name": "ANTHROPIC_FOUNDRY_RESOURCE", "value": "<your-foundry-resource-name>" }
+  ]
+}

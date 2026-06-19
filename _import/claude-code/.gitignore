@@ -1,0 +1,36 @@
+# --- Python / venv ---
+.venv/
+__pycache__/
+*.pyc
+
+# --- Environment / secrets ---
+.env*
+!.env.example
+
+# --- Working scripts not meant for the repo ---
+chat4.py
+run_model.py
+demo_claude_on_foundry.py
+requirements.txt
+_md_to_html.py
+_build_deck.py
+_add_scripts.py
+
+# --- Old drafts / superseded docs ---
+CLAUDE_CODE_FOUNDRY_SETUP.md
+claude-code-foundry-fix.md
+
+# --- Local-only working notes (do not publish) ---
+session-enablement-kit.md
+session-prep-claude-code-foundry.md
+session-prep-claude-code-foundry.html
+
+# --- Office lock files ---
+~$*
+
+# --- Stray top-level images (use the images/ folder) ---
+/settings.png
+
+# --- PowerPoint decks (do NOT push to GitHub) ---
+*.pptx
+*.ppt
