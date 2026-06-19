@@ -6,7 +6,7 @@ One page. Print it. Pin it to your monitor.
 
 ## Setup (5 steps)
 
-1. Deploy `claude-sonnet-4-6` in Foundry (East US 2 or Sweden Central).
+1. Deploy `claude-sonnet-4-6` in Foundry (currently East US 2 / Sweden Central — more regions coming; check [Microsoft Learn](https://learn.microsoft.com/azure/ai-foundry/foundry-models/concepts/models#anthropic)).
 2. Assign **`Foundry User`** at the Foundry **resource** scope (role ID `53ca6127-db72-4b80-b1b0-d745d6d5456d`, formerly *Azure AI User*). Don't add `Cognitive Services *` roles — they don't apply to Foundry.
 3. `az login --tenant <foundry-tenant>`
 4. `setx CLAUDE_CODE_USE_FOUNDRY 1` and `setx ANTHROPIC_FOUNDRY_RESOURCE <resource>`

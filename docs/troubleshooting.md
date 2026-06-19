@@ -18,7 +18,7 @@ Field-tested matrix. Add a row whenever you hit a new gotcha in a customer call.
 | 8 | `Model not found` on a working deployment | First API call | Deployment name doesn't match Claude's expected role name | Rename deployment to default (`claude-sonnet-4-6`) or override via config |
 | 9 | Hangs forever on first request | CLI | Private endpoint / NSG blocks egress to Foundry | Allow-list Foundry endpoint or run from inside the VNet |
 | 10 | CLI works, VS Code prompts for login | VS Code panel | Extension uses different process tree than CLI | Quit VS Code, relaunch via `code .` after `az login` |
-| 11 | `Region not supported` | Deployment | Claude not available in chosen region | Redeploy in East US 2 or Sweden Central |
+| 11 | `Region not supported` | Deployment | Claude not available in chosen region | Redeploy in a supported region (currently East US 2 / Sweden Central — more coming; see [Microsoft Learn](https://learn.microsoft.com/azure/ai-foundry/foundry-models/concepts/models#anthropic)) |
 | 12 | Role assigned but still 403 | First API call | Assigned at subscription scope, resource lives in a different sub | Re-assign **at the Foundry resource** scope |
 
 ---

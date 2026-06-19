@@ -55,7 +55,7 @@ Same model, same CLI, enterprise-grade plumbing underneath.
 | VS Code (current) with the Anthropic Claude Code extension | Help → About |
 | **Windows only:** Git Bash (from Git for Windows) or WSL2 — Claude Code's runtime requires a POSIX shell | `bash --version` in Git Bash / WSL |
 
-> ⚠️ Claude models in Foundry are currently available in select regions. Check the Foundry portal model catalog for your region's availability (commonly East US 2 and Sweden Central).
+> ⚠️ Claude models in Foundry are currently available in select regions (East US 2, Sweden Central) — more regions are coming. Check [Microsoft Learn](https://learn.microsoft.com/azure/ai-foundry/foundry-models/concepts/models#anthropic) or the Foundry portal model catalog for the current list.
 
 ---
 

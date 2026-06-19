@@ -61,7 +61,7 @@ For deeper architecture details see [docs/claude-code/architecture.md](docs/clau
 
 - **Azure subscription** with a **Microsoft Foundry / AI Services** account.
 - A **Claude model deployment** on that account — at minimum `claude-sonnet-4-6`. Recommended: also `claude-haiku-4-5` and `claude-opus-4-6`.
-- Foundry account must be in a region where Claude is offered (e.g. **East US 2**, **Sweden Central**).
+- Foundry account must be in a region where Claude is offered (currently **East US 2**, **Sweden Central** — more regions coming; check [Microsoft Learn](https://learn.microsoft.com/azure/ai-foundry/foundry-models/concepts/models#anthropic) to confirm).
 - The Foundry account must have a **custom subdomain** (required for AAD auth).
 - **`Foundry User`** role assigned **at the Foundry resource scope** to whichever identity will call Foundry — the dev user (Track A) or the APIM managed identity (Track B). Role ID `53ca6127-db72-4b80-b1b0-d745d6d5456d`, formerly *Azure AI User*.
   > Per the [Foundry RBAC doc](https://learn.microsoft.com/en-us/azure/foundry/concepts/rbac-foundry?tabs=owner), roles starting with `Cognitive Services *` do **not** apply to Foundry. Older guidance that recommended *also* assigning `Cognitive Services User` is obsolete.

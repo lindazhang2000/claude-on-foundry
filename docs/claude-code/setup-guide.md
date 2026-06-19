@@ -8,7 +8,7 @@ End-to-end walkthrough for getting Claude Code (CLI + VS Code extension) talking
 
 | Item | Why |
 |---|---|
-| Foundry resource in a supported region (East US 2, Sweden Central) | Claude models are region-gated |
+| Foundry resource in a supported region (currently East US 2, Sweden Central — more regions coming; check [Microsoft Learn](https://learn.microsoft.com/azure/ai-foundry/foundry-models/concepts/models#anthropic) to confirm) | Claude models are region-gated |
 | `Foundry User` role on the Foundry resource (role ID `53ca6127-db72-4b80-b1b0-d745d6d5456d`, formerly *Azure AI User*) | Single biggest cause of 401/403. Don't add `Cognitive Services *` roles — they don't apply to Foundry. |
 | Azure CLI installed and on PATH | Needed for `az login` and `az account show` |
 | Claude Code CLI installed | `irm https://claude.ai/install.ps1 \| iex` (Windows) / `curl -fsSL https://claude.ai/install.sh \| sh` (macOS/Linux) |

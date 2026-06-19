@@ -51,7 +51,7 @@ Claude should assume:
 
 ## Known constraints
 
-- Claude models are only available in **select regions** (e.g. East US 2, Sweden Central). West US 2 typically does not have them.
+- Claude models are only available in **select regions** (currently East US 2, Sweden Central — more regions coming; check [Microsoft Learn](https://learn.microsoft.com/azure/ai-foundry/foundry-models/concepts/models#anthropic) for the current list).
 - VS Code extension requires environment variables via **array** format in `settings.json` (not object form — the MS Learn doc shows the wrong shape).
 - VS Code must be launched **from an authenticated shell** (`code .`), NOT from the Start menu, or env vars won't be inherited.
 - Use **Reload Window only when settings.json changes**. For env-var changes, **fully quit** VS Code and relaunch.
