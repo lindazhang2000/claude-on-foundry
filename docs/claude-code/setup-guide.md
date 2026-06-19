@@ -104,12 +104,13 @@ Copy [../../examples/claude-code/vscode-settings.sample.json](../../examples/cla
 {
   "claudeCode.environmentVariables": [
     // --- Required ---
-    { "name": "CLAUDE_CODE_USE_FOUNDRY",    "value": "1" },
-    { "name": "ANTHROPIC_FOUNDRY_RESOURCE", "value": "<foundry-resource>" },
+    { "name": "CLAUDE_CODE_USE_FOUNDRY",        "value": "1" },
+    { "name": "ANTHROPIC_FOUNDRY_RESOURCE",     "value": "<foundry-resource>" },
 
-    // --- Optional: only if your deployment names differ from the model IDs ---
-    { "name": "ANTHROPIC_MODEL",             "value": "claude-sonnet-4-6" },
-    { "name": "ANTHROPIC_SMALL_FAST_MODEL",  "value": "claude-haiku-4-5" }
+    // --- Optional: per-role deployment overrides (only if your deployment names differ from the model IDs) ---
+    { "name": "ANTHROPIC_DEFAULT_SONNET_MODEL", "value": "claude-sonnet-4-6" },
+    { "name": "ANTHROPIC_DEFAULT_HAIKU_MODEL",  "value": "claude-haiku-4-5" },
+    { "name": "ANTHROPIC_DEFAULT_OPUS_MODEL",   "value": "claude-opus-4-6" }
   ],
 
   // Foundry users auth via `az login` — suppress the irrelevant Anthropic sign-in prompt.
@@ -120,7 +121,7 @@ Copy [../../examples/claude-code/vscode-settings.sample.json](../../examples/cla
 }
 ```
 
-> **Where's the model deployment?** Claude Code discovers deployments **by name** inside the Foundry resource specified by `ANTHROPIC_FOUNDRY_RESOURCE`. If you followed [section 2](#2-deploy-the-models) and used `--deployment-name claude-sonnet-4-6` etc., no override is needed — the client finds them automatically. Set `ANTHROPIC_MODEL` / `ANTHROPIC_SMALL_FAST_MODEL` only if you used custom deployment names. Use `/model` inside Claude to switch between discovered deployments.
+> **Where's the model deployment?** Claude Code discovers deployments **by name** inside the Foundry resource specified by `ANTHROPIC_FOUNDRY_RESOURCE`. If you followed [section 2](#2-deploy-the-models) and used `--deployment-name claude-sonnet-4-6` etc., no override is needed — the client finds them automatically. Set the `ANTHROPIC_DEFAULT_*_MODEL` trio only if you used custom deployment names. Use `/model` inside Claude to switch between discovered deployments.
 
 > **Why `disableLoginPrompt`?** Authentication is handled entirely by `az login` — there is no Anthropic account in this flow. The prompt is misleading and clicking it can pollute the session with a public-Anthropic token, silently bypassing Foundry.
 
