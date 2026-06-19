@@ -103,11 +103,18 @@ Copy [../../examples/claude-code/vscode-settings.sample.json](../../examples/cla
 ```jsonc
 {
   "claudeCode.environmentVariables": [
+    // --- Required ---
     { "name": "CLAUDE_CODE_USE_FOUNDRY",    "value": "1" },
-    { "name": "ANTHROPIC_FOUNDRY_RESOURCE", "value": "<foundry-resource>" }
+    { "name": "ANTHROPIC_FOUNDRY_RESOURCE", "value": "<foundry-resource>" },
+
+    // --- Optional: only if your deployment names differ from the model IDs ---
+    { "name": "ANTHROPIC_MODEL",             "value": "claude-sonnet-4-6" },
+    { "name": "ANTHROPIC_SMALL_FAST_MODEL",  "value": "claude-haiku-4-5" }
   ]
 }
 ```
+
+> **Where's the model deployment?** Claude Code discovers deployments **by name** inside the Foundry resource specified by `ANTHROPIC_FOUNDRY_RESOURCE`. If you followed [section 2](#2-deploy-the-models) and used `--deployment-name claude-sonnet-4-6` etc., no override is needed — the client finds them automatically. Set `ANTHROPIC_MODEL` / `ANTHROPIC_SMALL_FAST_MODEL` only if you used custom deployment names. Use `/model` inside Claude to switch between discovered deployments.
 
 > ⚠️ **Schema trap.** MS Learn shows an object form. The extension only accepts the **array** form shown above.
 

@@ -8,7 +8,15 @@
   // After editing settings.json, fully QUIT VS Code (not Reload Window) and
   // relaunch from a shell where you've already run `az login --tenant <foundry-tenant>`.
   "claudeCode.environmentVariables": [
+    // --- Required ---
     { "name": "CLAUDE_CODE_USE_FOUNDRY",    "value": "1" },
-    { "name": "ANTHROPIC_FOUNDRY_RESOURCE", "value": "<your-foundry-resource-name>" }
+    { "name": "ANTHROPIC_FOUNDRY_RESOURCE", "value": "<your-foundry-resource-name>" },
+
+    // --- Optional: model deployment overrides ---
+    // Only set these if your Foundry deployment NAMES differ from the model IDs.
+    // If you followed section 2 of setup-guide.md and named your deployments
+    // claude-sonnet-4-6 / claude-haiku-4-5 / claude-opus-4-6, you can omit these.
+    { "name": "ANTHROPIC_MODEL",             "value": "claude-sonnet-4-6" },
+    { "name": "ANTHROPIC_SMALL_FAST_MODEL",  "value": "claude-haiku-4-5" }
   ]
 }
