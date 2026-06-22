@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="640" viewBox="0 0 1200 640" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#475569"/>
+    </marker>
+    <marker id="arrowG" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#16A34A"/>
+    </marker>
+  </defs>
+
+  <!-- ===================== Track A ===================== -->
+  <rect x="30" y="20" width="500" height="300" rx="14" fill="#E3F2FD" stroke="#1976D2" stroke-width="2"/>
+  <text x="50" y="48" font-size="18" font-weight="bold" fill="#1565C0">Track A — Claude Code (direct)</text>
+
+  <g>
+    <rect x="130" y="64" width="300" height="46" rx="8" fill="#FFFFFF" stroke="#1976D2" stroke-width="1.5"/>
+    <text x="280" y="92" font-size="16" text-anchor="middle" fill="#0D47A1">👤 Developer</text>
+
+    <rect x="130" y="144" width="300" height="46" rx="8" fill="#FFFFFF" stroke="#1976D2" stroke-width="1.5"/>
+    <text x="280" y="172" font-size="16" text-anchor="middle" fill="#0D47A1">💻 Claude Code (CLI + VS Code)</text>
+
+    <rect x="130" y="224" width="300" height="46" rx="8" fill="#FFFFFF" stroke="#1976D2" stroke-width="1.5"/>
+    <text x="280" y="252" font-size="16" text-anchor="middle" fill="#0D47A1">🔑 az login session (Entra bearer)</text>
+
+    <line x1="280" y1="110" x2="280" y2="142" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+    <line x1="280" y1="190" x2="280" y2="222" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+  </g>
+
+  <!-- ===================== Track B ===================== -->
+  <rect x="670" y="20" width="500" height="340" rx="14" fill="#EDE7F6" stroke="#5E35B1" stroke-width="2"/>
+  <text x="690" y="48" font-size="18" font-weight="bold" fill="#4527A0">Track B — Claude Desktop (gateway)</text>
+
+  <g>
+    <rect x="770" y="62" width="300" height="44" rx="8" fill="#FFFFFF" stroke="#5E35B1" stroke-width="1.5"/>
+    <text x="920" y="89" font-size="16" text-anchor="middle" fill="#311B92">👤 Corporate user</text>
+
+    <rect x="770" y="130" width="300" height="44" rx="8" fill="#FFFFFF" stroke="#5E35B1" stroke-width="1.5"/>
+    <text x="920" y="157" font-size="15" text-anchor="middle" fill="#311B92">🔑 Entra ID (OIDC + MFA + CA)</text>
+
+    <rect x="770" y="198" width="300" height="44" rx="8" fill="#FFFFFF" stroke="#5E35B1" stroke-width="1.5"/>
+    <text x="920" y="225" font-size="16" text-anchor="middle" fill="#311B92">🖥️ Claude Desktop</text>
+
+    <rect x="770" y="266" width="300" height="44" rx="8" fill="#FFFFFF" stroke="#5E35B1" stroke-width="1.5"/>
+    <text x="920" y="293" font-size="16" text-anchor="middle" fill="#311B92">🛡️ APIM · validate-jwt</text>
+
+    <line x1="920" y1="106" x2="920" y2="128" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+    <text x="930" y="122" font-size="12" fill="#6D4FB0">browser SSO</text>
+    <line x1="920" y1="174" x2="920" y2="196" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+    <text x="930" y="190" font-size="12" fill="#6D4FB0">ID token</text>
+    <line x1="920" y1="242" x2="920" y2="264" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+    <text x="930" y="258" font-size="12" fill="#6D4FB0">Bearer &lt;ID token&gt;</text>
+  </g>
+
+  <!-- ===================== Foundry ===================== -->
+  <rect x="30" y="440" width="1140" height="180" rx="14" fill="#F0FDF4" stroke="#16A34A" stroke-width="2"/>
+  <text x="50" y="468" font-size="18" font-weight="bold" fill="#15803D">Microsoft Foundry resource (shared)</text>
+
+  <g>
+    <rect x="70" y="498" width="320" height="92" rx="8" fill="#FFFFFF" stroke="#F59E0B" stroke-width="2.5"/>
+    <text x="230" y="536" font-size="16" text-anchor="middle" font-weight="bold" fill="#92400E">RBAC: Foundry User</text>
+    <text x="230" y="560" font-size="14" text-anchor="middle" fill="#92400E">at resource scope</text>
+
+    <rect x="470" y="498" width="300" height="92" rx="8" fill="#FFFFFF" stroke="#16A34A" stroke-width="1.5"/>
+    <text x="620" y="550" font-size="16" text-anchor="middle" fill="#14532D">Custom-subdomain endpoint</text>
+
+    <rect x="850" y="498" width="280" height="92" rx="8" fill="#FFFFFF" stroke="#16A34A" stroke-width="1.5"/>
+    <text x="990" y="536" font-size="15" text-anchor="middle" font-weight="bold" fill="#14532D">Claude deployments</text>
+    <text x="990" y="560" font-size="13" text-anchor="middle" fill="#14532D">sonnet-4-6 · haiku-4-5 · opus-4-6</text>
+
+    <line x1="390" y1="544" x2="468" y2="544" stroke="#16A34A" stroke-width="2.5" marker-end="url(#arrowG)"/>
+    <line x1="770" y1="544" x2="848" y2="544" stroke="#16A34A" stroke-width="2.5" marker-end="url(#arrowG)"/>
+  </g>
+
+  <!-- ===================== Converging arrows ===================== -->
+  <path d="M280,270 C 280,400 200,420 200,496" fill="none" stroke="#1976D2" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <path d="M920,310 C 920,420 330,410 290,496" fill="none" stroke="#5E35B1" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <text x="560" y="404" font-size="13" fill="#5E35B1" text-anchor="middle">x-api-key OR managed identity</text>
+</svg>
